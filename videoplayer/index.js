@@ -266,11 +266,7 @@ document.addEventListener("keydown", ({key}) => {
     }
 })
 
-
-// click space
-// click left
-// click right
-// click esc
-// click dobleclick
-// click next video
-
+// fullscreen style 
+// adaptive
+// reduce seconds anim
+// long loading, mp4 ??
