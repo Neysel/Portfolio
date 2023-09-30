@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videoplayer</title>
+    <link rel="stylesheet" href="../videoplayer/index.css">
+    <link rel="shortcut icon" href="../videoplayer/assets/icons/video-818.png" type="image/x-icon">
+    
+</head>
+<body>
+    <main class="player">
+        <!-- src="assets/videos/GUNSHIP - DooM Dance (Feat. Carpenter Brut Gavin Rossdale) [Official Lyric Video].mkv" -->
+        <div class="videowrapper" id="videowrapper">
+        <div id="loading_wrapper">
+            <div id="loading_circle"></div>
+        </div>
+        <video type="video/mp4" class="viewer" preload="metadata" src="../videoplayer/assets/videos/GUNSHIP - DooM Dance (Feat. Carpenter Brut Gavin Rossdale) [Official Lyric Video].mkv" poster="assets/images/mpc-hc64_2rWjXfG9JH.jpg">
+        </video>
+                    
+        <div class="tempTimeSkip" id="tempm10">
+            <div>-10 sec</div>
+        </div>
+        <div class="tempTimeSkip" id="tempp25">
+            <div>+25 sec</div>
+        </div>
+        <div class="player_controls">
+
+            <input type="range" id="progressBar" min="0" max="300" value="0" step="0.5"> 
+   
+
+            <button class="player_button toggle" title="Toggle Play"></button>
+            
+            <div class="time">
+                <span id="startTime">00:00</span><span> / </span><span id="durationTime">00:00</span>
+            </div>
+            <!-- <div class="time" id="Duration">00:00</div> -->
+
+
+            <button data-skip="-10" class="player_skip_b" id="minus10">
+                <div class="icon"></div>
+                <div class="text">-10s</div>
+            </button>
+            <button data-skip="25" class="player_skip_b" id="plus25">
+                <div class="icon"></div>
+                <div class="text">+25s</div>
+            </button>
+
+
+
+            <div class="config" id="config">
+            </div>
+            <div class="config_wrapper" id="config_wrapper" style="display: none">
+                <div class="playerSpeed">
+                    <div class="textWrapper">
+                        <div class="text">Speed: </div>
+                    </div>
+                    <div class="rangeWrapper">
+                        <input type="range" id="speedRange" name="playbackRate" class="player_slider" min="0.5" max="2" step="0.1" value="1">
+                        <div class="text" id="speedNumber">1x</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="volumeButton" id="volumeB"></div>
+            <input type="range" name="volume" id="inpVolume" class="player_slider" min="0" max="1" step="0.05" value="1">
+            <button class="fullscreen" id="fullscreen"></button>
+
+        </div>
+        <!-- https://youtu.be/qcEVvIwpel0  -->
+        </div> 
+        <!-- end of videowrapper -->
+       
+    </main>
+    <footer id="footer">
+        <a href="https://github.com/Neysel?tab=repositories"  style="display: block">GitHub Neysel</a>
+        <!-- <div></div> -->
+    </footer>
+    <script src="index.js"></script>
+</body>
+</html>
