@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="../imageGallery/assets/icons/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <main>
+        <header>
+            <div class="container">
+                <div id="header">
+                    <div class="wrapperH">
+                        <h1>Unsplash API gallery</h1>
+                        <div class="img"></div>
+                    </div>
+                    <form name="searchPic">
+                    <input type="text" name="search" class="search" id="search" placeholder="Enter any text"  autocomplete="off">
+                    <div class="cancel" id="cancel"></div>
+                    <input type="submit" id="submit" value="">
+                    </form>
+                </div>
+            </div>
+        </header>
+        <section>   
+            <div class="container">
+                <div id="images">
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="year">
+                2023
+            </div>
+            <div class="logo">
+                <a href="https://rs.school/js-stage0/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg" alt="Roling Scopes School"></a>
+            </div>
+            <div class="githbLink">
+                <a href="https://github.com/Neysel" target="_blank"> GitHub Neysel</a>
+            </div>
+        </div>
+    </footer>
+    <!-- https://api.unsplash.com/search/photos?query=spring&per_page=30&orientation=landscape&client_id=SouHY7Uul-OxoMl3LL3c0NkxUtjIrKwf3tsGk1JaiVo -->
+    <!-- https://api.unsplash.com/search/photos?query=spring&client_id=SouHY7Uul-OxoMl3LL3c0NkxUtjIrKwf3tsGk1JaiVo -->
+    <script src="index.js"></script>
+</body>
+</html>

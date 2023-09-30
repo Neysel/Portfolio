@@ -1,0 +1,148 @@
+*{ 
+    box-sizing: border-box;
+    margin: 0
+}
+
+body {
+    background: black;
+}
+
+.search {
+    width: 250px;
+    height: 50px;
+}
+.container {
+    margin: 0 20px;
+}
+header {
+    padding-bottom: 20px;
+    border-bottom: 4px rgb(188, 73, 255) solid ;
+}
+
+
+.wrapperH {
+ display: flex;
+ justify-content:space-around;   
+}
+
+
+header h1 {
+    color: aliceblue;
+    margin-top: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 40px;
+}
+
+.wrapperH .img {
+    margin: 20px 20px 0 0;
+    background-image: url(../imageGallery/assets/icons/picture.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 70px;
+    height: 70px;
+}
+
+
+form[name="searchPic"] {
+    margin: 0 auto;
+    margin-top: 10px;
+    position: relative;
+    width: 300px;
+}
+
+input.search {
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    padding-left: 20px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+#images {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    gap: 20px;
+}
+#images .img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 220px;
+    border-radius: 5px;
+}
+
+#images .img:hover {
+    scale: 1.15;
+    transition: 0.2s All;
+    cursor: pointer;
+}
+
+#search{
+    width: 300px; 
+   
+}
+
+#submit {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    background-image: url(../imageGallery/assets/icons/search.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.cancel {
+    display: none;
+    background-image: url(../imageGallery/assets/icons/cross.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 40px;
+    border-top:4px rgb(188, 73, 255) solid;
+    height: 100px;
+}
+footer .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+footer .container .year {
+    color: aliceblue;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+} 
+
+footer .container .logo {
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    filter: invert(90%);
+}  
+
+footer .container .githbLink a{
+    text-decoration: none;
+    color: aliceblue; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+}
