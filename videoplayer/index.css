@@ -62,7 +62,6 @@ body {
     bottom: -100px;
     transition: 0.3s all;
     background:linear-gradient( rgba(0,0,0,0), black);
-    /* z-index: 5; */
 } 
 
 .player_button.toggle {
@@ -76,9 +75,7 @@ body {
     bottom: 15px;
     left: 15px;
     filter: invert(20%);
-    /* z-index: 5; */
 }
-
 
 #progressBar {
     position: absolute;
@@ -110,11 +107,9 @@ body {
     background-color: #000000;
 }
 
-
 .player:hover .player_controls {
-bottom: 0;
+bottom: 0; 
 }
-
 .time {
     z-index: 2;
     position: absolute;
@@ -125,7 +120,6 @@ bottom: 0;
     top: 50%;
     transform: translateY(-50%);
 }
-
 
 .player_skip_b {
     position: absolute;
@@ -144,6 +138,7 @@ bottom: 0;
 } 
 
 .player_skip_b .icon {
+    display: block;
     width: 25px;
     height: 100%;
     background: url(../videoplayer/assets/icons/faster_slower.svg) center;
@@ -165,25 +160,32 @@ bottom: 0;
     transition: 0.2s all ease-in-out;
     background-color: rgba(150, 150, 150, 0.5);
     position: absolute;
-    width: 400px;
-    height: 400px;
-    font-size: 50px;
+    width: 180px;
+    height: 180px;
+    font-size: 40px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     align-items: center;
     border-radius: 50%;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
     color: white;
     z-index: 10;
+    /* display: table; */
     display: none;
 }
 
 .tempTimeSkip div {
     display: table-cell;
     vertical-align: middle;
-    
+}
+.tempTimeSkip#tempm10 {
+    left: 20px
+}
+.tempTimeSkip#tempp25 {
+    right: 20px
 }
 
 #config {
@@ -202,13 +204,12 @@ bottom: 0;
 #config:active  {
     filter: invert(55%)
 }
-
-
 .config_wrapper {
     display: none;
     width: 250px;
     height: 40px;
     background-color: #3d3d3d;
+    border: 2px solid rgb(145, 145, 145);
     position: absolute;
     right: 0px;
     top: -30px;
@@ -219,19 +220,22 @@ bottom: 0;
 .playerSpeed {
     display: flex;
     align-items: center;
-    width: 246px;
-    height: 36px;
-    border: 2px solid rgb(145, 145, 145);
+    width: 250px;
+    height: 40px;
+    border-bottom: 2px solid rgb(145, 145, 145);
     border-radius: 10px;
     cursor: auto;
 }
 
 
 .textWrapper {
+    width: 100px;
     border-right: 2px solid  rgb(145, 145, 145);;
-    height: 36px;
+    height: 40px;
     display: flex;
     align-items: center;
+    position: relative;
+    justify-content: center;
 }
 
 .playerSpeed .text {
@@ -245,6 +249,14 @@ bottom: 0;
 .rangeWrapper {
     display: flex;
     width: 146px;
+    position: relative;
+}
+
+.rangeWrapper .text {
+    margin-left: 100px;
+}
+.volumeWrapper {
+    display: none;
 }
 
 input[name="playbackRate"] {
@@ -282,13 +294,9 @@ input[name="playbackRate"] {
     background-color: #000000;
 }
 
-.rangeWrapper .text {
-    margin-left: 100px;
-}
-
 
 .volumeButton {
-    background-image: url(../videoplayer/assets/icons/low_volume.svg) center;
+    background-image: url(../videoplayer/assets/icons/low_volume.svg);
     background-repeat: no-repeat;
     background-size:cover;
     position: absolute;
@@ -300,8 +308,12 @@ input[name="playbackRate"] {
     right: 135px;
     bottom: 21px; 
     cursor: pointer;
+    display: block;
 }
-
+#volumeB {
+    display: block;
+ 
+}
 #inpVolume{
     position: absolute;
     width: 80px;
@@ -357,3 +369,119 @@ input[name="playbackRate"] {
     height: 20px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
+
+
+  /* This css is only applied when fullscreen is active. */
+  video::-webkit-media-controls {
+    display:none !important;
+  }
+
+#videowrapper:fullscreen .viewer {
+    width: 100vw;
+    height: 100vh;
+}
+
+@media screen and (max-width: 630px) { 
+    .player_button.toggle {
+        width: 30px;
+        height: 30px;
+    }
+
+    .time {
+        left: 60px;
+    }
+    .player_skip_b  {
+        left: 150px;
+    }
+    .player_skip_b#plus25 {
+        left: 180px;
+    }
+
+    .player_skip_b .icon {
+        width: 18px;
+    }
+
+    .player_skip_b .text {
+        font-size: 12px;
+    }
+
+    #config {
+        right: 100px;
+        width: 20px;
+        height: 20px;
+    }
+    .volumeButton {
+        width: 15px;
+        height: 15px;
+        right: 85px;
+    }
+
+    #inpVolume {
+        width: 50px;
+        right: 30px;
+        height: 5px;
+    }
+    .fullscreen {
+        width: 20px;
+        height: 20px;
+    }
+
+
+    @media screen and (max-width: 450px) {
+
+        #config {
+            right: 25px;
+        }
+        .time {
+            left: 50px;
+            font-size: 12px;
+        } 
+        .player_skip_b  {
+            left: 120px;
+        }
+        .player_skip_b#plus25 {
+            left: 150px;
+        }
+    
+
+        .config_wrapper {
+            width: 235px;
+            height: 80px;
+            top: -80px;
+        }
+        .playerSpeed {
+            border-radius: 0px;
+        }
+        .volumeWrapper {
+            display: flex;
+        align-items: center;
+        width: 250px;
+        height: 40px;
+        /* border: 2px solid rgb(145, 145, 145); */
+        border-radius: 10px;
+        cursor: auto;
+        }
+
+        #volumeB{
+            display: none;
+        }
+        #inpVolume {
+            display: none;
+        }
+        #volumeBMobile {
+            background-image: url(../videoplayer/assets/icons/low_volume.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: invert(100%);
+            width: 27px;
+            height: 27px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #inpVolumeMobile {
+            width: 100px;
+        }
+        .player_controls {}
+    }
+}
