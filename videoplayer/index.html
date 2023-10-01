@@ -26,25 +26,20 @@
             <div>+25 sec</div>
         </div>
         <div class="player_controls">
-
             <input type="range" id="progressBar" min="0" max="300" value="0" step="0.5"> 
-   
-
             <button class="player_button toggle" title="Toggle Play"></button>
-            
+
             <div class="time">
                 <span id="startTime">00:00</span><span> / </span><span id="durationTime">00:00</span>
             </div>
             <!-- <div class="time" id="Duration">00:00</div> -->
-
-
             <button data-skip="-10" class="player_skip_b" id="minus10">
-                <div class="icon"></div>
-                <div class="text">-10s</div>
+                <span class="icon"></span>
+                <span class="text">-10s</span>
             </button>
             <button data-skip="25" class="player_skip_b" id="plus25">
-                <div class="icon"></div>
-                <div class="text">+25s</div>
+                <span class="icon"></span>
+                <span class="text">+25s</span>
             </button>
 
 
@@ -60,7 +55,14 @@
                         <input type="range" id="speedRange" name="playbackRate" class="player_slider" min="0.5" max="2" step="0.1" value="1">
                         <div class="text" id="speedNumber">1x</div>
                     </div>
-                    
+                </div>
+                <div class="volumeWrapper">
+                    <div class="textWrapper">
+                        <div class="volumeButton" id="volumeBMobile"></div>
+                    </div>
+                    <div class="rangeWrapper">
+                        <input type="range" name="volume" id="inpVolumeMobile" class="player_slider" min="0" max="1" step="0.05" value="1">
+                    </div>
                 </div>
             </div>
 

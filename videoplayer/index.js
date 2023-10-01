@@ -6,17 +6,20 @@ const video = player.querySelector('.viewer');
 const toggle = player.querySelector('.toggle')
 const skipButtons = player.querySelectorAll('[data-skip]')
 const ranges = player.querySelectorAll('.player_slider')
+let playerControls = player.querySelector('.player_controls')
 let duration 
 let percent
 let time
-
+let intervalMouse
+let flagfullscreen = false
 // ----------------------------------------------
 // Default values
 
 inpVolume.value = 0.3
+inpVolumeMobile.value = inpVolume.value
 video.volume = 0.3
 updSpeed() 
-updVolume()
+    inpVolume.style.backgroundImage = `linear-gradient(to right, #289eff 30%, rgb(150, 150, 150) 30%)`
 
 // ----------------------------------------------
 // functions 
@@ -116,34 +119,36 @@ function scrub(e) {
     video.currentTime = scrubTime
 }
 
-function fade(element) {
-    var op = 1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op <= 0.1){
-            clearInterval(timer);
-            element.style.display = 'none';
-        }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.1;
-    }, 50);
-}
+// function fade(element) {
+//     var op = 1;  // initial opacity
+//     var timer = setInterval(function () {
+//         if (op <= 0.1){
+//             clearInterval(timer);
+//             element.style.display = 'none';
+//         }
+//         element.style.opacity = op;
+//         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+//         op -= op * 0.1;
+//     }, 50);
+// }
 
-function unfade(element) {
-    var op = 0.1;  // initial opacity
-    element.style.display = 'table';
-    var timer = setInterval(function () {
-        if (op >= 1){
-            clearInterval(timer);
-        }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op += op * 0.1;
-    }, 10);
-}
+// function unfade(element) {
+//     var op = 0.1;  // initial opacity
+//     element.style.display = 'table';
+//     var timer = setInterval(function () {
+//         if (op >= 1){
+//             clearInterval(timer);
+//         }
+//         element.style.opacity = op;
+//         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+//         op += op * 0.1;
+//     }, 10);
+// }
 
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 function updSpeed() {
     percent = ((speedRange.value - 0.5) / (speedRange.max - 0.5)) * 100
@@ -154,15 +159,22 @@ function updSpeed() {
 
 
 function updVolume() {
-    percent = inpVolume.value / inpVolume.max * 100
+    inpVolume.value = this.value
+    inpVolumeMobile.value = this.value
+    percent = this.value / this.max * 100
     inpVolume.style.backgroundImage = `linear-gradient(to right, #289eff ${percent}%, rgb(150, 150, 150) ${percent}%)`;
+    inpVolumeMobile.style.backgroundImage = `linear-gradient(to right, #289eff ${percent}%, rgb(150, 150, 150) ${percent}%)`;
     if (percent === 0 ) {
         volumeB.style.backgroundImage = 'url(../videoplayer/assets/icons/mute.svg)'
+        volumeBMobile.style.backgroundImage = 'url(../videoplayer/assets/icons/mute.svg)'
     } else if (percent < 50) {
         inpVolume.style.backgroundImage = `linear-gradient(to right, #289eff ${percent+1}%, rgb(150, 150, 150) ${percent+1}%)`;
+        volumeBMobile.style.backgroundImage = `linear-gradient(to right, #289eff ${percent+1}%, rgb(150, 150, 150) ${percent+1}%)`;
         volumeB.style.backgroundImage = 'url(../videoplayer/assets/icons/low_volume.svg)'
+        volumeBMobile.style.backgroundImage = 'url(../videoplayer/assets/icons/low_volume.svg)'
     } else if (percent > 50) {
         volumeB.style.backgroundImage = 'url(../videoplayer/assets/icons/normal_volume.svg)'
+        volumeBMobile.style.backgroundImage = 'url(../videoplayer/assets/icons/normal_volume.svg)'
     }
 }
 
@@ -173,32 +185,45 @@ function toggleDisplay(e) {
     } else config_wrapper.style.display = 'none'
 }
 
-
 function openFullscreen() {
-
-        // if (footer.style.display === 'none') {
-        //     footer.style.display = 'block'
-        // } else footer.style.display = 'none'
-        // videowrapper.classList.toggle('videoFullscreen')
-        // video.classList.toggle('videoFullscreen')
-        if (video.requestFullscreen) {
-            video.requestFullscreen()
-    } else if (video.webkitRequestFullscreen) { /* Safari */
-    video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { /* IE11 */
-    video.msRequestFullscreen();
-    }
+    const container = document.getElementById('videowrapper');
+    const fullscreenApi = container.requestFullscreen
+    || container.webkitRequestFullScreen
+    || container.mozRequestFullScreen
+    || container.msRequestFullscreen;
+  if (!document.fullscreenElement) {
+    fullscreenApi.call(container);
+    // flagfullscreen = true
+    hideMouse()
+  }
+  else {
+    document.exitFullscreen();
+    // flagfullscreen = false
+    // console.log(flagfullscreen)
+    playerControls.style.bottom = ''
+    hideMouse()
+  }
   } 
 
+function hideMouse() {
+    // console.log((flagfullscreen === true))
+    clearInterval(intervalMouse)
+    if (flagfullscreen === true) {
+        intervalMouse = setInterval(() => {
+            video.style.cursor = "none"
+            playerControls.style.bottom = '-100px'
+        }, 5000)
+    } 
+}
+
 function minusSec() {
-    unfade(tempm10);
-    delay(500);
-    fade(tempm10)
+tempm10.style.display = 'table';
+    delay(1000).then(() => tempm10.style.display = 'none');
+ 
 }
 function plusSec() {
-    unfade(tempp25);
-    delay(500);
-    fade(tempp25)
+    tempp25.style.display = 'table';
+    delay(1000).then(() => tempp25.style.display = 'none');
 }
 
 // ----------------------------------------------
@@ -222,7 +247,10 @@ speedRange.addEventListener('change', updSpeed)
 speedRange.addEventListener('mousemove', updSpeed)
 
 inpVolume.addEventListener('change', updVolume)
+inpVolumeMobile.addEventListener('change', updVolume)
 inpVolume.addEventListener('mousemove', updVolume)
+inpVolumeMobile.addEventListener('mousemove', updVolume)
+
 
 
 progressBar.addEventListener("input", (e) => {
@@ -248,11 +276,15 @@ document.addEventListener("keydown", (e) => {
     // console.log('space pressed')
  }
 })
+
+// 
 document.addEventListener("keydown", ({key}) => {
     switch (key) {
-        case "Escape":
-            openFullscreen()
-            break;
+        // case "Escape":
+        //     flagfullscreen = false
+        //     playerControls.style.bottom = ''
+            
+        //     break;
         case "ArrowLeft": 
         minusSec()
         minus10.click()
@@ -265,8 +297,29 @@ document.addEventListener("keydown", ({key}) => {
             break;
     }
 })
+  
 
-// fullscreen style 
-// adaptive
-// reduce seconds anim
-// long loading, mp4 ??
+videowrapper.addEventListener('mousemove', () => {
+    // console.log('move move move')
+    clearInterval(intervalMouse)
+    video.style.cursor = "auto"
+    if (flagfullscreen === true) {
+        playerControls.style.bottom = '0px'
+        hideMouse()
+    }
+})
+
+videowrapper.addEventListener("fullscreenchange", (event) => {
+    console.log('change')
+    clearInterval(intervalMouse)
+
+    if (flagfullscreen === false) {
+        flagfullscreen = true
+        hideMouse()
+    } else if (flagfullscreen === true) {
+        flagfullscreen = false
+        playerControls.style.bottom = ''
+    }
+    console.log(flagfullscreen)
+})
+
