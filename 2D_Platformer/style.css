@@ -1,0 +1,246 @@
+*{ 
+    margin: 0;
+    
+}
+body {
+    background-color: rgb(29, 29, 29);
+}
+
+
+.center_canvas {
+    margin-top: 10px;
+    width: 100%;
+    height: 610px;
+}
+
+#canvas1 {
+
+    /* margin: 0 auto; */
+    border: 5px solid black;
+    position: absolute;
+    /* top: 50%; */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 600px;
+    background-image: url(./assets/images/Shadow_the_Hedgehog.jpg);
+    background-position: center;
+    /* background-position: right; */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+img {
+    display: none;
+}
+
+.menu {
+    position: absolute;
+    width: 220px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    color: aliceblue;
+    text-shadow: 2px 2px 2px black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    display: grid;
+    gap: 10px;
+    text-align: center;
+    background-color: rgba(0, 0 ,0, 0.5);
+    border-radius: 10px;
+}
+.start_game {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+}
+.start_game:hover{
+    color: rgb(167, 167, 167);
+}
+
+.start_game:active{
+    color: aliceblue;
+}
+
+.settings {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+}
+
+.settings:hover{
+    color: rgb(167, 167, 167);
+}
+
+.settings:active{
+    color: aliceblue;
+}
+
+#settings_menu {
+    padding-top: 10px;
+    position: absolute;
+    width: 220px;
+    height: 360px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    color: aliceblue;
+    text-shadow: 2px 2px 2px black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    /* display: grid; */
+    display: none;
+    gap: 20px;
+    text-align: center;
+    background-color: rgba(0, 0 ,0, 0.5);
+    border-radius: 10px;
+}
+
+
+
+#settings_menu input {
+    cursor: pointer;
+-webkit-appearance: none;
+appearance: none; 
+cursor: pointer;
+outline: none;
+background-color: rgb(150, 150, 150);
+border-radius: 10px;
+height: 10px;
+}
+
+#settings_menu input::-webkit-slider-thumb  {
+  background-color: #b40000;  -webkit-appearance: none;
+  appearance: none; 
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+#settings_menu input::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  transition: .2s ease-in-out;
+  border-radius: 50%;
+  border: none;
+  background-color: #000000;
+  /* background-color: #ff4eaf; */
+}
+
+
+#difficulty {
+    cursor: pointer;
+}
+
+#difficulty:hover{
+    color: rgb(167, 167, 167);
+}
+
+#difficulty:active{
+    color: aliceblue;
+}
+
+
+#hardDif {
+    display: none;
+}
+
+.menu_exit{
+    font-size: 30px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+
+.leaderboards {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+}
+.leaderboards:hover{
+    color: rgb(167, 167, 167);
+}
+.leaderboards:active{
+    color: aliceblue;
+}
+
+#leaderboards_window {
+    padding-top: 10px;
+    position: absolute;
+    width: 500px;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    /* display: grid; */
+    display: none;
+    /* gap: 20px; */
+    text-align: center;
+    background-color: rgba(0, 0 ,0, 0.5);
+     text-shadow: 2px 2px 2px black;
+    border-radius: 10px;
+}
+
+#leaderboards_window .score {
+    font-size: 20px;
+}
+
+
+.menu_exit:hover{
+    color: rgb(167, 167, 167);
+}
+
+.menu_exit:active{
+    color: aliceblue;
+}
+
+
+/* ------------------*/
+/* FOOTER */
+/*-------------------*/
+
+footer {
+    margin-top: 40px;
+    border-top:4px rgb(85, 85, 85) solid;
+    height: 100px;
+}
+footer .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+footer .container .year {
+    color: rgb(255, 255, 255);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+} 
+
+footer .container .logo a img{
+    filter: invert(90%);
+    display: block;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+}  
+/* footer .container .logo { */
+    /* display: block; */
+    /* width: 100px; */
+    /* height: 50px; */
+    /* cursor: pointer; */
+/* }   */
+
+
+footer .container .githbLink a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+ /* color: aliceblue; */
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+    font-size: 20px;
+}
