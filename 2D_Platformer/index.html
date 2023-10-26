@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main>
+      <div class="center_canvas">
+        <canvas id="canvas1"></canvas>
+        <div class="menu" id="menuMain">
+          <div class="start_game" id="start_game">
+            Start Game
+          </div>
+          <div class="settings" id="settings">
+            Settings
+          </div>
+          <div class="leaderboards" id="leaderboards">
+            Leaderboards
+          </div>
+        </div>
+
+        <div id="leaderboards_window">TOP 10 TOTAL SCORES
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="score"></div>
+          <div class="menu_exit">Menu</div>
+        </div>
+
+        <div class="settings_menu" id="settings_menu">
+          <div>Music
+            <input type="range" id="volumeMusic" max="100">
+          </div>
+          <div> Sound
+            <input type="range" id="volumeSound" max="100">
+          </div>
+          
+          <div id="difficulty"> Difficulty
+            <div id="normalDif">Normal</div>
+            <div id="hardDif">Hard</div>
+          </div>
+          <div id="menu_exit" class="menu_exit">Menu</div>
+
+        </div>
+
+      </div>
+      <img id="bull" src="./assets/images/black_bul.png" alt="bull">
+    <img id="fireEffectsForGitHub" src='./assets/images/Fire_effects.png' alt="effectsFire">
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="year">
+            2023
+        </div>
+        <div class="logo">
+            <a href="https://rs.school/js-stage0/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg" alt="Roling Scopes School"></a>
+        </div>
+        <div class="githbLink">
+            <a href="https://github.com/Neysel" target="_blank">GitHub Neysel</a>
+        </div>
+    </div>
+
+    </footer>
+    <script type="text/javascript" src="js_files/main.js">
+      
+    </script>
+</body>
+</html>

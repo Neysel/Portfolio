@@ -53,9 +53,6 @@ let musicArray = {
   }
 }
 let mlength = Object.keys(musicArray).length
-// var fs = require('fs');
-// var files = fs.readdirSync('../audioplayer/items/audio/');
-// console.log(files)
 
 
 window.onload = (event) => {
@@ -74,8 +71,6 @@ const play = document.querySelector('.play');
 play.addEventListener('click', player); 
 
 function player() { 
-    // console.log(!isPlay)
-    
     if (!isPlay) {
         audio.play();
         isPlay = true
@@ -83,7 +78,6 @@ function player() {
         audio.pause();
         isPlay = false
     }
- 
   }
   
 
