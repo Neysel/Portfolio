@@ -62,10 +62,9 @@ let gameOver = false
 let pause = false 
 let win = false
 let menuNow = true
-let musicPlays = false
 let gameTimer = 0
-
 let totalScore 
+
 ////////////////////////////////////////////
  // SPRITES ARRAYS // 
 ////////////////////////////////////////////
@@ -232,6 +231,7 @@ let spriteAnimations =
 //////////////////////
 // GAME BACKGROUND //
 //////////////////////
+
 let gameSpeed = 4
 let gameFrameBg = 0
 let path = 0
@@ -303,7 +303,6 @@ const layer3 = new Layer(backgroundLayer3, 0.8, 958, 100, 0, 500)
    // WIN EMERALD //
 //////////////////////
 
-
 class Emerald {
     constructor() {
         this.globalX = -2500
@@ -319,7 +318,6 @@ class Emerald {
         console.log('emeralx '+this.x)
         this.x = this.globalX + path
         console.log('path='+path)
-
         // ctx.beginPath()
         // ctx.arc(-6.85 * this.x, this.y + this.height + 100, this.width/15, 0, Math.PI * 2)
         // ctx.stroke()
@@ -505,7 +503,6 @@ function winFunc(){
             totalScore = ((score / (gameTimer * 0.001) * 100)*100).toFixed(0)
             setLeaderBoard()
             win = true
-            // flagNoSpaceBar = false
         })
         delay(2000).then(() => flagNoSpaceBar = false)
 }
@@ -619,12 +616,9 @@ class InputHanlder {
     }
 }
 
-
-
 //////////////////////
 // MAIN CHARACTER //
 ////////////////////// 
-
 
 class Player {
     constructor(gameWidth, gameHeight){
@@ -994,10 +988,6 @@ function handleElements(deltaTime){
   // MENU SETTINGS //
 ////////////////////// 
 
-
-let flagTimerStart = false
-
-
 function displayStatusText(context, deltaTime){
 
 
@@ -1024,7 +1014,7 @@ if (!gameOver && !win) {
 ctx.drawImage(healthBarImg, healthBar[lifecount].x, healthBar[lifecount].y, 150/3.4, 40/2, 0, 0, 180, 50)
 
     if (win === true){
-
+        
         // putted black shadow on words
         context.fillStyle = ' black'
         context.font = '100px Courier New'

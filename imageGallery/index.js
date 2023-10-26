@@ -4,7 +4,7 @@ let searchRes
 let state = []
 search.focus()
 
-let url = `https://api.unsplash.com/photos/random?client_id=${clientid1}&count=16query=Cyber` 
+let url = `https://api.unsplash.com/photos/random?client_id=${clientid1}&count=16` 
 
 async function getData() {
     const res = await fetch(url);
@@ -64,4 +64,8 @@ cancel.onclick = () => {
   // data.urls.regular;
 
   // showData(data)
+
+
+
+  
 
