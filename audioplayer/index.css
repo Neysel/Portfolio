@@ -3,28 +3,17 @@
 
 
 body {
-  
-    /* height: 100%; */
-  
 
-/* position: relative; */
 }
 
 div.img {
     width: 100vw;
     height: 100vh;
     background: url(../audioplayer/items/images/myown.jpg) center;
-    /* background: center; */
     background-repeat: no-repeat;
     background-size:cover;
     filter: blur(10px);
 }
-
-
-/* .main {
-    height: 100vh;
-    width: auto;
-} */
 
 .audio_container {
         /* margin: 42vh 0 0 50vw; */
@@ -203,12 +192,8 @@ audio {
     cursor: pointer;
     width: 20px;
     height: 20px;
-    /* position: absolute; */
     border: 2px solid rgb(255, 255, 255);
-    /* border-offset: 5px; */
     border-radius: 50%;
-    /* left: 125px;
-    top: 75px; */
     cursor: pointer;
     padding: 15px;
 }
@@ -258,18 +243,6 @@ audio {
     /* background-color: #ff4eaf; */
 }
 
-
-/* .verticalVolume {
- 
-    position: absolute;
-    right: 12px;
-    top: 10px;   
-} */
-
-/* .sss {
-    flex: 1;
-} */
-
 #progressVolume {
     transform: rotate(-90deg);
     cursor: pointer;
@@ -281,13 +254,9 @@ audio {
     outline: none;
   
     background-color: rgb(150, 150, 150);
-    /* color: aliceblue; */
     border-radius: 10px;
     -webkit-appearance: none;
     appearance: none; 
-    /* appearance: slider-vertical; */
-    /*  safari  */
-    /* -webkit-appearance: slider-vertical; */
   }
 
   #progressVolume::-webkit-slider-thumb  {
@@ -392,42 +361,40 @@ audio {
 
 /* footer */
 
+
 footer {
-    /* width: 1440px; */
     position: absolute;
-    bottom: 0;
+    margin-top: 40px;
+    border-top:4px rgb(22, 22, 22) solid;
+    height: auto;
     width: 100%;
-    height: 100px;
-    background: linear-gradient(rgb(88, 88, 88), rgb(27, 27, 27))
-    /* border-radius: 10px 10px 0 0 ; */
-    /* margin: 0 20px; */
+    bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0), black);
 }
-
-footer .wrapper {
-    margin: 0 20px;
+footer .container {
     display: flex;
-    justify-content: space-between;
-}
-
-footer .year {
-    font-size: 30px;
-    margin-top: 30px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-footer .course {
-    background: url(https://rs.school/images/rs_school.svg) center;
-    background-repeat: no-repeat;
-    width: 150px;
+    justify-content: space-around;
+    align-items: center;
     height: 100px;
-    cursor: pointer;
 }
+footer .container .year {
+    color: rgb(255, 255, 255);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+} 
 
-footer .github {
+footer .container .logo a img{
+    filter: invert(90%);
+    display: block;
+    width: 100px;
+    height: 50px;
     cursor: pointer;
-    font-size: 30px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin-top: 30px;
-color: #000000  ;
-text-decoration: none;
+}  
+
+footer .container .githbLink a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+ /* color: aliceblue; */
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+    font-size: 20px;
 }
