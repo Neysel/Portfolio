@@ -7,7 +7,7 @@ window.addEventListener("load", (event) => {
 const ctx = canvas1.getContext('2d')
 const CANVAS_WIDTH = canvas1.width = 1200
 const CANVAS_HEIGHT = canvas1.height = 600
-
+let nanDebugCount = 0 
 
 const musicLevel = new Audio()
 musicLevel.src = './assets/music/Westopolis.mp3'
@@ -260,7 +260,13 @@ class Layer {
         this.speedFog = 0
         this.frames = 0
     }
-    update(input) {
+    update(input, deltaTime) {
+        let speedFactor = deltaTime / 16;
+
+        if (isNaN(speedFactor) || !isFinite(speedFactor)) {
+        speedFactor = 1;
+    }
+
     if (this.image === backgroundLayer2) {
         this.speedFog = (gameSpeed * this.speedModifier) * 0.4
         this.Fog = (gameFrameBg *  this.speedFog % this.width);
@@ -269,20 +275,30 @@ class Layer {
 
         if (input.keys.indexOf('a') > -1 || input.keys.indexOf('ф') > -1) {
             this.speed = -(gameSpeed * this.speedModifier * 0.8)
-            this.x += (2 * this.speed % this.width);
-            if (this.x < 0 - this.width) this.x = 0
-            path -= Math.abs(this.x / 700)
-           
+             this.x += this.speed * speedFactor;
+            if (this.x < 0 - this.width) this.x = 0;
+            // Fix: Use a safe calculation for path
+            // path -= Math.abs(this.x / 700)
+            const pathChange = Math.abs(this.speed * speedFactor * 0.5);
+            if (!isNaN(pathChange)) {
+                    path -= pathChange;
+                }           
         } else if (input.keys.indexOf('d') > -1 || input.keys.indexOf('в') > -1) {
             this.speed = gameSpeed * this.speedModifier
-            this.x += 2 * this.speed % this.width;
+            this.x += this.speed * speedFactor;
             if (this.x > this.width) this.x = 0
-            path += Math.abs(this.x / 700)
+            // path += Math.abs(this.x / 700)
+             const pathChange = Math.abs(this.speed * speedFactor * 0.5);
+                if (!isNaN(pathChange)) {
+                    path += pathChange;
+                }
         } else {
             this.speed = 0
         } 
     }
     }
+      if (isNaN(path)) path = 0;
+       console.log('Path:', path, 'Emerald X:', emeraldDraw.x)
     console.log(Math.floor(path / 100))
     }
     draw(){
@@ -315,9 +331,11 @@ class Emerald {
         this.image = emerald
     }
     update(){
+          if (isNaN(path)) path = 0;
         console.log('emeralx '+this.x)
         this.x = this.globalX + path
         console.log('path='+path)
+        if (isNaN(this.x)) this.x = -1000;
         // ctx.beginPath()
         // ctx.arc(-6.85 * this.x, this.y + this.height + 100, this.width/15, 0, Math.PI * 2)
         // ctx.stroke()
@@ -527,18 +545,42 @@ function reset() {
     lifecount = 5
     gameFrameBg = 0; 
     gameFrame = 0
+     lastTime = 0
+    player.speed = 0;
+    player.vy = 0;
+
+    if (isNaN(player.x)) player.x = 0;
+    if (isNaN(player.y)) player.y = player.gameHeight - player.height - 60;
 }
 
+let lastHitTime = 0;
+const HIT_COOLDOWN = 500; 
+
 function getHit(e) {
+
+      const currentTime = Date.now();
+
+ if (currentTime - lastHitTime < HIT_COOLDOWN) {
+        return;
+    }
+
+     lastHitTime = currentTime;
+    
 if (getHitFlag === true) {
     if (lifecount >= 1 ) lifecount -= 1
     e.x -= 120
     e.y -= 130
     e.position = 0
     e.playerState = 'hit'
+
+   delay(100).then(() => {
+            getHitFlag = false;
+        });
+
     delay(1000).then(() => {
     e.position = 0
     e.playerState = 'stay'
+     getHitFlag = false;
     })
 }  
 }
@@ -637,6 +679,7 @@ class Player {
         this.speed = 1
         this.vy = 0
         this.weight = 1
+        this.nanDebugCount = 0 
     }
     draw(context){
         const spriteHeight = 44
@@ -728,9 +771,24 @@ class Player {
         }
 
   
-    update(input){
+    update(input, deltaTime){
 console.log(flagNoSpaceBar)
-        
+
+if (isNaN(this.x)) {
+        nanDebugCount++;
+        console.error(`NaN detected! Count: ${nanDebugCount}, State: ${this.playerState}, Speed: ${this.speed}, Input: ${input.keys}`);
+        console.trace(); // This will show where the NaN came from
+    }
+   if (isNaN(this.y) || this.y < -1000 || this.y > 10000) {
+        console.warn("Player Y position NaN detected, resetting");
+        this.y = this.gameHeight - this.height - 60;
+    }
+
+         const speedFactor = deltaTime / 16
+
+
+
+
         // ----------------------------------
         // screen default
 
@@ -740,9 +798,24 @@ console.log(flagNoSpaceBar)
         // Input movement
 
 if (getHitFlag === false && loseFlag === false) {
-    this.x += this.speed
+    if (isNaN(this.speed)) this.speed = 0;
+       // Validate every step
+    const moveCalc = this.speed * speedFactor;
+    if (isNaN(moveCalc)) {
+        console.error('Move calculation is NaN! speed:', this.speed, 'speedFactor:', speedFactor);
+        return; // Skip this update
+    }
+     this.x += moveCalc;
+
+  if (isNaN(this.x))       {  
+        console.error('NaN DETECTION - Stack trace:');
+        console.trace();
+        console.error('Current state - deltaTime:', deltaTime, 'speed:', this.speed, 'y:', this.y, 'vy:', this.vy);
+        this.x = 0;
+  }
+
     if (input.keys.indexOf(' ') > -1 && this.onGround()) {
-        this.vy -= 20
+         this.vy -= 22;
     }  else if (input.keys.indexOf('a') > -1 ||input.keys.indexOf('ф') > -1) {
         this.speed = -4
     } else if (input.keys.indexOf('d') > -1 ||input.keys.indexOf('в') > -1) {
@@ -757,12 +830,14 @@ if (getHitFlag === false && loseFlag === false) {
 }
         // ------------------------------
         // verical movement
-        this.y += this.vy
+        this.y += this.vy * (deltaTime / 16);
         if (this.y > this.gameHeight - this.height - 65) this.y = this.gameHeight - this.height - 65
 
         if (!this.onGround()){
             if (getHitFlag === false) this.playerState = 'attack'
-            this.vy += this.weight
+            this.vy += this.weight * (deltaTime / 16); 
+            if (isNaN(this.vy)) this.vy = 0;
+             if (isNaN(this.y)) this.y = 0;
         } else {
             this.vy = 0
             if (this.playerState !== 'idle' && this.playerState !== 'hit' && this.playerState !== 'death') this.playerState = 'stay'
@@ -779,24 +854,25 @@ if (getHitFlag === false && loseFlag === false) {
         if (!this.onGround()) {
             if (this.playerState !== 'hit' && this.playerState !== 'death') this.playerState = 'attack'
         }
-        if (input.keys.length === 0) {
-            if (this.playerState !== 'idle' && this.playerState !== 'hit' && this.playerState !== 'attack') {
-                this.playerState = 'stay'
-                this.position = 0
-            }
-            if (gameFrame % 400 === 0) {
-                if (this.playerState !== 'hit' && this.playerState !== 'death') this.playerState = 'idle'
-            } 
-            this.frameX = spriteAnimations[this.playerState].loc[this.position].x
-            this.frameY = spriteAnimations[this.playerState].loc[this.position].y
-            this.spriteWidth = spriteAnimations[this.playerState].loc[this.position].wd
+        if (input.keys.length === 0 && this.onGround() && getHitFlag === false && loseFlag === false) {
+    if (this.playerState !== 'idle' && this.playerState !== 'hit' && this.playerState !== 'attack' && this.playerState !== 'death') {
+        this.playerState = 'stay';
+        this.position = 0;
+    }
+    if (gameFrame % 400 === 0) {
+        if (this.playerState !== 'hit' && this.playerState !== 'death' && this.playerState !== 'attack') {
+            this.playerState = 'idle';
         }
+    } 
+}
     }
         // -----------------------------
         //  play animation
         staggerFrames = spriteAnimations[this.playerState].staggerFrames
+
+        const animationSpeed = Math.floor(staggerFrames * (16 / deltaTime));
         // this.position = Math.floor(gameFrame/staggerFrames) % spriteAnimations[playerState].loc.length
-        if (gameFrame % staggerFrames == 0) {
+        if (gameFrame % animationSpeed == 0) {
             if (this.position < spriteAnimations[this.playerState].loc.length-1) {
                 this.position++ 
                 this.frameX = spriteAnimations[this.playerState].loc[this.position].x
@@ -829,8 +905,9 @@ class Enemies {
         this.image
         this.markForDeletion = false
     }
-    update(){
-        this.x -= this.speed
+    update(deltaTime){
+        const speedFactor = deltaTime / 16;
+        this.x -= this.speed * speedFactor 
         if (this.x < 0 - this.width) this.markForDeletion = true
     }
     draw(ctx){
@@ -855,8 +932,9 @@ class Bull extends Enemies {
         this.speed = 10
         this.image = bull;
     }
-    update(){
-        this.x -= this.speed
+    update(deltaTime){
+        const speedFactor = deltaTime / 16;
+        this.x -= this.speed * speedFactor
         if (this.x < 0 - this.width) this.markForDeletion = true
     }
     draw(){
@@ -886,19 +964,27 @@ class Bat extends Enemies{
         this.frameY = spriteAnimationsBat[this.position].y
         this.angle = 0
         this.angleSpeed =  Math.random() * 0.2
+        this.animationTimer = 0
     }
-    update() {
+    update(deltaTime) {
+        const speedFactor = deltaTime / 16;
         //  ctx.beginPath()
         // ctx.arc(this.x + this.width/2.4, this.y + this.height/2, this.width/3, 0, Math.PI * 2)
         // ctx.stroke()
-        this.x -= this.speed
-        this.y += 2 * Math.sin(this.angle)
+        this.x -= this.speed * speedFactor
+        this.y += 2 * Math.sin(this.angle) * speedFactor
         if (this.x < 0 - this.width) this.markForDeletion = true
-        this.angle += this.angleSpeed
-        if (gameFrameEnemy %  this.flapSpeed === 0) {
-            this.position > 4 ? this.position = 0 : this.position++
+
+        this.animationTimer += deltaTime;
+        const flapInterval = 100;
+
+        this.angle += this.angleSpeed * speedFactor
+        // const flapSpeedScaled = Math.floor(this.flapSpeed * (16 / deltaTime));
+          if (this.animationTimer > flapInterval) {
+            this.position = (this.position + 1) % spriteAnimationsBat.length;
             this.frameX = spriteAnimationsBat[this.position].x
             this.frameY = spriteAnimationsBat[this.position].y
+            this.animationTimer = 0;
         }
     }
     draw(){
@@ -925,15 +1011,17 @@ class Soldier extends Enemies {
         this.frameX = spriteAnimationsSoldier[this.position].x
         this.frameY = spriteAnimationsSoldier[this.position].y
     }
-    update(){
+    update(deltaTime){
+           const speedFactor = deltaTime / 16;
         //       ctx.beginPath()
         // ctx.arc(this.x + this.width/2, this.y + this.height/2, this.width/3, 0, Math.PI * 2)
         // ctx.stroke()
         soldierAppear.volume = volumeSound.value / 500
-        this.x -= this.speed
+        this.x -= this.speed * speedFactor
         if (this.x < 0 - this.width) this.markForDeletion = true
         if (this.x + this.width < 0) this.x = canvas1.width
-            if (gameFrame %  this.staggerFrames === 0) {
+        const staggerFramesScaled = Math.floor(this.staggerFrames * (16 / deltaTime));
+            if (gameFrame % staggerFramesScaled === 0) {
                 this.position > 17 ? this.position = 0 : this.position++
                 this.frameX = spriteAnimationsSoldier[this.position].x
                 this.frameY = spriteAnimationsSoldier[this.position].y
@@ -958,10 +1046,13 @@ let enemies = []
 
 
 function handleElements(deltaTime){
+
+      const scaledDelta = deltaTime;
+
     if (BatTimer > BatInterval) {
         enemies.push(new Bat(this))
         BatTimer = 0 
-    } else BatTimer += deltaTime
+    } else BatTimer += scaledDelta
 
     if (BullTimer > BullInterval){
         enemies.push(new Bull(this))
@@ -969,17 +1060,17 @@ function handleElements(deltaTime){
         bullAudio.volume = volumeSound.value / 300
         bullAudio.play()
         BullTimer = 0 
-    } else BullTimer += deltaTime
+    } else BullTimer += scaledDelta
 
     if (SoldierTimer > SoldierInterval){
         enemies.push(new Soldier(this))
         soldierAppear.play()
         SoldierTimer = 0 
-    } else SoldierTimer += deltaTime
+    } else SoldierTimer += scaledDelta
 
     enemies.forEach(enemy => {
         enemy.draw(ctx)
-        enemy.update()
+        enemy.update(deltaTime)
     })
     enemies = enemies.filter(enemy => !enemy.markForDeletion)
 }
@@ -1182,22 +1273,33 @@ leaderboards.addEventListener('click', ()=>{
 //start game//
 
 function animationLoop(timeStamp){
-    const deltaTime = 16.715000000000146
-    lastTime = timeStamp 
+    // const deltaTime = 16.715000000000146
+
+    console.log('Player state:', player.playerState, 'Position:', player.position, 'X:', player.x, 'Y:', player.y);
+
+    if (lastTime === 0) {
+     lastTime = timeStamp  
+    }
+  
+    const deltaTime = timeStamp - lastTime;
+     lastTime = timeStamp;
+     
+     const cappedDeltaTime = Math.min(deltaTime, 100);
+   
     ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT)
-    layer1.update(input)
+    layer1.update(input, cappedDeltaTime)
     layer1.draw()
-    layer2.update()
+    layer2.update(cappedDeltaTime)
     layer2.drawIndepend()
-    layer3.update(input)
+    layer3.update(input, cappedDeltaTime)
     layer3.draw()
     gameFrameBg++; 
     gameFrame++
     player.draw(ctx)
-    player.update(input)
+    player.update(input, cappedDeltaTime)
     player.updateEn(enemies, gameOver)
-    handleElements(deltaTime)
-    displayStatusText(ctx, deltaTime)
+    handleElements(cappedDeltaTime)
+    displayStatusText(ctx, cappedDeltaTime)
 
     emeraldDraw.update()
     emeraldDraw.draw()
@@ -1211,8 +1313,9 @@ function animationLoop(timeStamp){
         }
     }
 
-    if (gameOver || pause || win) musicLevel.pause()
+   
 
+    if (gameOver || pause || win) musicLevel.pause()        
     if (!gameOver && !pause && !win && !menuNow) {
         requestAnimationFrame(animationLoop) 
         musicLevel.play()
