@@ -546,21 +546,41 @@ function reset() {
     gameFrameBg = 0; 
     gameFrame = 0
      lastTime = 0
+    player.speed = 0;
+    player.vy = 0;
 
-      if (isNaN(player.x)) player.x = 0;
+    if (isNaN(player.x)) player.x = 0;
     if (isNaN(player.y)) player.y = player.gameHeight - player.height - 60;
 }
 
+let lastHitTime = 0;
+const HIT_COOLDOWN = 500; 
+
 function getHit(e) {
+
+      const currentTime = Date.now();
+
+ if (currentTime - lastHitTime < HIT_COOLDOWN) {
+        return;
+    }
+
+     lastHitTime = currentTime;
+    
 if (getHitFlag === true) {
     if (lifecount >= 1 ) lifecount -= 1
     e.x -= 120
     e.y -= 130
     e.position = 0
     e.playerState = 'hit'
+
+   delay(100).then(() => {
+            getHitFlag = false;
+        });
+
     delay(1000).then(() => {
     e.position = 0
     e.playerState = 'stay'
+     getHitFlag = false;
     })
 }  
 }
@@ -759,7 +779,10 @@ if (isNaN(this.x)) {
         console.error(`NaN detected! Count: ${nanDebugCount}, State: ${this.playerState}, Speed: ${this.speed}, Input: ${input.keys}`);
         console.trace(); // This will show where the NaN came from
     }
-    if (isNaN(this.y)) this.y = this.gameHeight - this.height - 60;
+   if (isNaN(this.y) || this.y < -1000 || this.y > 10000) {
+        console.warn("Player Y position NaN detected, resetting");
+        this.y = this.gameHeight - this.height - 60;
+    }
 
          const speedFactor = deltaTime / 16
 
@@ -792,7 +815,7 @@ if (getHitFlag === false && loseFlag === false) {
   }
 
     if (input.keys.indexOf(' ') > -1 && this.onGround()) {
-        this.vy -= 20
+         this.vy -= 22;
     }  else if (input.keys.indexOf('a') > -1 ||input.keys.indexOf('ф') > -1) {
         this.speed = -4
     } else if (input.keys.indexOf('d') > -1 ||input.keys.indexOf('в') > -1) {
@@ -807,12 +830,14 @@ if (getHitFlag === false && loseFlag === false) {
 }
         // ------------------------------
         // verical movement
-        this.y += this.vy
+        this.y += this.vy * (deltaTime / 16);
         if (this.y > this.gameHeight - this.height - 65) this.y = this.gameHeight - this.height - 65
 
         if (!this.onGround()){
             if (getHitFlag === false) this.playerState = 'attack'
-            this.vy += this.weight
+            this.vy += this.weight * (deltaTime / 16); 
+            if (isNaN(this.vy)) this.vy = 0;
+             if (isNaN(this.y)) this.y = 0;
         } else {
             this.vy = 0
             if (this.playerState !== 'idle' && this.playerState !== 'hit' && this.playerState !== 'death') this.playerState = 'stay'
@@ -844,8 +869,10 @@ if (getHitFlag === false && loseFlag === false) {
         // -----------------------------
         //  play animation
         staggerFrames = spriteAnimations[this.playerState].staggerFrames
+
+        const animationSpeed = Math.floor(staggerFrames * (16 / deltaTime));
         // this.position = Math.floor(gameFrame/staggerFrames) % spriteAnimations[playerState].loc.length
-        if (gameFrame % staggerFrames == 0) {
+        if (gameFrame % animationSpeed == 0) {
             if (this.position < spriteAnimations[this.playerState].loc.length-1) {
                 this.position++ 
                 this.frameX = spriteAnimations[this.playerState].loc[this.position].x
@@ -937,6 +964,7 @@ class Bat extends Enemies{
         this.frameY = spriteAnimationsBat[this.position].y
         this.angle = 0
         this.angleSpeed =  Math.random() * 0.2
+        this.animationTimer = 0
     }
     update(deltaTime) {
         const speedFactor = deltaTime / 16;
@@ -946,11 +974,17 @@ class Bat extends Enemies{
         this.x -= this.speed * speedFactor
         this.y += 2 * Math.sin(this.angle) * speedFactor
         if (this.x < 0 - this.width) this.markForDeletion = true
+
+        this.animationTimer += deltaTime;
+        const flapInterval = 100;
+
         this.angle += this.angleSpeed * speedFactor
-        if (gameFrameEnemy %  this.flapSpeed === 0) {
-            this.position > 4 ? this.position = 0 : this.position++
+        // const flapSpeedScaled = Math.floor(this.flapSpeed * (16 / deltaTime));
+          if (this.animationTimer > flapInterval) {
+            this.position = (this.position + 1) % spriteAnimationsBat.length;
             this.frameX = spriteAnimationsBat[this.position].x
             this.frameY = spriteAnimationsBat[this.position].y
+            this.animationTimer = 0;
         }
     }
     draw(){
@@ -986,7 +1020,8 @@ class Soldier extends Enemies {
         this.x -= this.speed * speedFactor
         if (this.x < 0 - this.width) this.markForDeletion = true
         if (this.x + this.width < 0) this.x = canvas1.width
-            if (gameFrame %  this.staggerFrames === 0) {
+        const staggerFramesScaled = Math.floor(this.staggerFrames * (16 / deltaTime));
+            if (gameFrame % staggerFramesScaled === 0) {
                 this.position > 17 ? this.position = 0 : this.position++
                 this.frameX = spriteAnimationsSoldier[this.position].x
                 this.frameY = spriteAnimationsSoldier[this.position].y
