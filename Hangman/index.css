@@ -1,0 +1,254 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    transition: 0.5s all;
+}
+
+body {
+    display: flex;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.gallow {
+    margin: 20px 60px 0 20px;
+    position: relative;
+}
+
+.gallow img {
+    width: 200px;
+    height: 300px;
+}
+
+.body_in_gallow {
+    position: absolute;
+    right: 2px;
+    top: 75px;
+}
+
+.head {
+    /* background-image: url(images/head.png); */
+    border: 3px black solid;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    right: 2px;
+    display: none;
+}
+
+.left_arm_one{ 
+    background-color: black;
+    transform: rotate(-45deg);
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 4px;
+    position: absolute;
+    right: 18px;
+    top: 80px;
+    display: none;
+}
+
+.right_arm_two {
+    background-color: black;
+    transform: rotate(45deg);
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 4px;
+    position: absolute;
+    right: -22px;
+    top: 80px;
+    display: none;
+}
+
+.belly {
+    background-color: black;
+    background-position: center;
+    background-size: contain;
+    width: 4px;
+    height: 55px;
+    position: absolute;
+    top: 48px;
+    right: 23px;
+    display: none;
+}
+
+.left_leg_one {
+    background-color: black;
+    transform: rotate(-45deg);
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 4px;
+    position: absolute;
+    right: 18px;
+    top: 120px;
+    display: none;
+}
+
+.right_leg_two {
+    background-color: black;
+    transform: rotate(45deg);
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 4px;
+    position: absolute;
+    right: -22px;
+    top: 120px;
+    display: none;
+}
+
+.rightPart {
+    margin: 20px;
+    margin-top: 50px;
+    width: auto;
+    height: auto;
+}
+
+.secret_word {
+    height: 5rem;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-wrap: wrap;
+}
+
+.line {
+    width: 20px;
+    background-color: black;
+    height: 3px;
+    margin: 10px;
+    font-size: 40px;
+}
+.empty_line {
+    width: 12px;
+    height: 3px;
+    /* margin: 10px; */
+}
+
+
+.guess_counter {
+    font-size: 20px;
+    text-align: center;
+    margin: 20px;
+    margin-bottom: 5px;
+}
+
+.incorrect_guesses {
+    text-align: center;
+    color: rgb(248, 36, 36);
+}
+
+.keyboard {
+    height: auto;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-top: 20px;
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.letter {
+    width: 40px;
+    height: 35px;
+    margin:10px;
+    background-color:cornflowerblue;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 10%;
+    cursor: pointer;
+}
+.letter.disabled {
+    background-color:rgb(189, 189, 189);
+}
+
+.modal_window {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    display: none;
+}
+.message {
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 50px;
+}
+.secret_word_message {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 25px;
+}
+
+.play_again_button {
+    font-size: 30px;
+    text-align: center;
+    /* margin-top: 100px; */
+    cursor: pointer;
+    border: 2px black solid;
+    border-radius: 10px;
+    display: flex;
+    width: 210px;
+    height: 50px;
+    
+    justify-content: center;
+    align-items: center;
+    margin: 100px auto 0px auto;
+    transition: none;
+}
+
+.play_again_button:active {
+    color: rgb(190, 190, 190);
+}
+
+@media screen and (max-width: 640px){
+
+    body {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .rightPart {
+        margin-top: 10px;
+    }
+    .gallow {
+        margin-right: 10px;
+    }
+
+    .gallow img {
+        width: 150px;
+        height: auto;
+    }
+
+    .body_in_gallow {
+        top: 60px;
+        right: -5px;
+    }
+
+    .secret_word .line {
+        width: 15px;
+        margin: 5px;
+        font-size: 30px;
+    }
+    .question {
+        font-size: 13px;
+    }
+    .guess_counter {
+        font-size: 15px;
+    }
+    .keyboard .letter{
+        margin: 5px;
+    }
+}

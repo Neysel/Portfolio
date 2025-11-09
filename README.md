@@ -8,6 +8,8 @@ Videoplayer: https://neysel.github.io/Portfolio/videoplayer/
 
 Image gallery using Unsplash API: https://neysel.github.io/Portfolio/imageGallery/ 
 
-Simple game: https://neysel.github.io/Portfolio/2D_Platformer/ 
+Simple game Hangman: https://neysel.github.io/Portfolio/Hangman/ 
+
+Simple game 2d platformer: https://neysel.github.io/Portfolio/2D_Platformer/ 
 
 
