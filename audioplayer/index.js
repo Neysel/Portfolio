@@ -54,8 +54,12 @@ let musicArray = {
 }
 let mlength = Object.keys(musicArray).length
 
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 window.onload = (event) => {
+  sleep(1000).then(() => {
     audio.volume = 0.25;
     fullTime.innerHTML = getTimeCodeFromNum(audio.duration)
     // console.log(audio.duration / 60)
@@ -63,6 +67,7 @@ window.onload = (event) => {
     progressVolume.value = 25;
     volumeIco.style.backgroundImage = 
     `url(../audioplayer/items/images/icons/low-volume_icon-icons.com_70924.svg)`
+  })
   } 
 
 
